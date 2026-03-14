@@ -146,7 +146,7 @@ div.stButton > button:hover {
 </style>
 """, unsafe_allow_html=True)
 
-st.title("📰 APO News Reader")
+st.title("APO News Reader")
 st.markdown("Paste a news article link below to read it without ads or subscription popups.")
 
 st.markdown("---")
@@ -180,25 +180,16 @@ if submit and url:
 
         st.success("Article loaded successfully!")
 
+        # Show title
         st.subheader(article.title)
 
+        # Show article content
         st.markdown("### Article Content")
         st.write(article.text)
 
-    except:
-        st.error("❌ Could not extract article content.")
-if url:
-    try:
-        with st.spinner("Fetching article..."):
-            article = Article(url)
-            article.download()
-            article.parse()
+        st.markdown("---")
 
-        st.success("Article loaded successfully!")
-
-        st.subheader(article.title)
-
-        # Make the button very visible
+        # AI summary button AFTER article
         if st.button("🤖 Generate AI Summary", type="primary"):
 
             with st.spinner("Generating AI summary..."):
@@ -206,10 +197,6 @@ if url:
 
             st.markdown("## 🤖 AI Summary")
             st.write(summary)
-
-        st.markdown("---")
-        st.markdown("### Article Content")
-        st.write(article.text)
 
     except:
         st.error("❌ Could not extract article content.")
