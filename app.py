@@ -34,7 +34,7 @@ logo_base64 = get_base64_image("Austin-Police-Oversight-Logo-Faded-White.png")
 
 st.set_page_config(
     page_title="Austin News Reader",
-    page_icon="📰",
+    page_icon="",
     layout="wide"
 )
 # Background styling
