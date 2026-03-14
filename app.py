@@ -51,7 +51,7 @@ st.markdown(
     .logo-container {{
         position: fixed;
         top: 70px;
-        right: 40px;
+        right: 45px;
         z-index: 1000;
     }}
 
@@ -67,7 +67,7 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
-st.title("📰 Austin News Reader")
+st.title("📰 APO News Reader")
 st.markdown("Paste a news article link below to read it without ads or subscription popups.")
 
 st.markdown("---")
