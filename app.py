@@ -112,6 +112,40 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
+st.markdown("""
+<style>
+
+/* Center the search container */
+.search-container {
+    max-width: 800px;
+    margin: auto;
+}
+
+/* Style the input field */
+div[data-baseweb="input"] input {
+    border-radius: 30px;
+    height: 46px;
+    padding-left: 18px;
+    font-size: 16px;
+}
+
+/* Style the button */
+div.stButton > button {
+    background-color: #44499C;
+    color: white;
+    border-radius: 30px;
+    height: 46px;
+    font-weight: 600;
+    border: none;
+}
+
+div.stButton > button:hover {
+    background-color: #2f347a;
+}
+
+</style>
+""", unsafe_allow_html=True)
+
 st.title("📰 APO News Reader")
 st.markdown("Paste a news article link below to read it without ads or subscription popups.")
 
@@ -119,17 +153,21 @@ st.markdown("---")
 
 st.subheader("🔗 Enter News Article Link")
 
-col1, col2 = st.columns([6,1])
+st.markdown('<div class="search-container">', unsafe_allow_html=True)
+
+col1, col2 = st.columns([8,2])
 
 with col1:
     url = st.text_input(
-        "Paste the article URL here:",
-        placeholder="https://www.statesman.com/...",
+        "",
+        placeholder="Paste a news article URL...",
         label_visibility="collapsed"
     )
 
 with col2:
-    submit = st.button("Read Article", use_container_width=True)
+    submit = st.button("🔎 Read Article", use_container_width=True)
+
+st.markdown('</div>', unsafe_allow_html=True)
 
 st.markdown("---")
 
