@@ -162,24 +162,18 @@ st.markdown(
 st.markdown("""
 <style>
 
-/* Style normal buttons */
-div.stButton > button {
-    background-color: #44499C;
-    color: white;
-    border-radius: 30px;
-    height: 46px;
-    font-weight: 600;
-    border: none;
-}
-
-/* Style download buttons */
+/* Style BOTH normal buttons and download buttons */
+div.stButton > button,
 div.stDownloadButton > button {
+
     background-color: #44499C;
     color: white;
     border-radius: 30px;
     height: 46px;
+    padding: 0px 22px;
     font-weight: 600;
     border: none;
+    width: auto;
 }
 
 /* Hover effect */
@@ -277,6 +271,5 @@ if st.session_state.summary:
         label="Download as PDF",
         data=pdf_file,
         file_name="article_summary.pdf",
-        mime="application/pdf",
-        use_container_width=True
+        mime="application/pdf"
     )
