@@ -96,14 +96,21 @@ st.markdown("---")
 
 st.subheader("🔗 Enter News Article Link")
 
-url = st.text_input(
-    "Paste the article URL here:",
-    placeholder="https://www.statesman.com/..."
-)
+col1, col2 = st.columns([6,1])
+
+with col1:
+    url = st.text_input(
+        "Paste the article URL here:",
+        placeholder="https://www.statesman.com/...",
+        label_visibility="collapsed"
+    )
+
+with col2:
+    submit = st.button("Read")
 
 st.markdown("---")
 
-if url:
+if submit and url:
     try:
         with st.spinner("Fetching article..."):
             article = Article(url)
