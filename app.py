@@ -159,27 +159,37 @@ st.markdown(
 
 # ----------- BUTTON STYLING -----------
 
-st.markdown(
-    """
-    <style>
+st.markdown("""
+<style>
 
-    div.stButton > button {
-        background-color: #44499C;
-        color: white;
-        border-radius: 30px;
-        height: 46px;
-        font-weight: 600;
-        border: none;
-    }
+/* Style normal buttons */
+div.stButton > button {
+    background-color: #44499C;
+    color: white;
+    border-radius: 30px;
+    height: 46px;
+    font-weight: 600;
+    border: none;
+}
 
-    div.stButton > button:hover {
-        background-color: #2f347a;
-    }
+/* Style download buttons */
+div.stDownloadButton > button {
+    background-color: #44499C;
+    color: white;
+    border-radius: 30px;
+    height: 46px;
+    font-weight: 600;
+    border: none;
+}
 
-    </style>
-    """,
-    unsafe_allow_html=True
-)
+/* Hover effect */
+div.stButton > button:hover,
+div.stDownloadButton > button:hover {
+    background-color: #2f347a;
+}
+
+</style>
+""", unsafe_allow_html=True)
 
 
 # ----------- PAGE TITLE -----------
@@ -264,8 +274,9 @@ if st.session_state.summary:
     )
 
     st.download_button(
-        label="📄 Download Article + Summary as PDF",
+        label="Download Article + Summary as PDF",
         data=pdf_file,
         file_name="article_summary.pdf",
-        mime="application/pdf"
+        mime="application/pdf",
+        use_container_width=True
     )
