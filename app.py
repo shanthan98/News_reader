@@ -10,13 +10,26 @@ st.set_page_config(
 st.title("📰 Austin News Reader")
 st.markdown("Paste a news article link below to read it without ads or subscription popups.")
 
-url = st.text_input("🔗 Paste Article URL")
+st.markdown("---")
+
+# Clear input section
+st.subheader("🔗 Enter News Article Link")
+
+url = st.text_input(
+    label="Paste the article URL here:",
+    placeholder="https://www.statesman.com/...",
+)
+
+st.markdown("---")
 
 if url:
     try:
-        article = Article(url)
-        article.download()
-        article.parse()
+        with st.spinner("Fetching article..."):
+            article = Article(url)
+            article.download()
+            article.parse()
+
+        st.success("Article loaded successfully!")
 
         st.subheader(article.title)
 
