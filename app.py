@@ -51,7 +51,7 @@ st.markdown(
     .logo-container {{
         position: fixed;
         top: 70px;
-        right: 35px;
+        right: 30px;
         z-index: 1000;
     }}
 
