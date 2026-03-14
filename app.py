@@ -187,10 +187,7 @@ if submit and url:
 
         st.success("Article loaded successfully!")
 
-    except:
-        st.error("❌ Could not extract article content.")
-
-    except:
+    except Exception:
         st.error("❌ Could not extract article content.")
 if st.session_state.article_text:
 
