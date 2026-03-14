@@ -11,20 +11,28 @@ st.set_page_config(
 st.markdown(
     """
     <style>
+
     .stApp {
-        background-image: url("https://images.unsplash.com/photo-1504711434969-e33886168f5c");
+        background: linear-gradient(
+            rgba(68, 73, 156, 0.85),
+            rgba(68, 73, 156, 0.85)
+        ),
+        url("https://images.unsplash.com/photo-1531218150217-54595bc2b934");
         background-size: cover;
         background-position: center;
         background-attachment: fixed;
     }
 
-    h1, h2, h3, h4, h5, h6, p, div, label {
+    h1, h2, h3, h4, h5, h6, p, div, label, span {
         color: white !important;
     }
 
     input {
+        background-color: white !important;
         color: black !important;
+        border-radius: 6px;
     }
+
     </style>
     """,
     unsafe_allow_html=True
