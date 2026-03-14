@@ -1,6 +1,28 @@
 import streamlit as st
 from newspaper import Article
 import base64
+from openai import OpenAI
+
+client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
+
+def summarize_article(text):
+
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[
+            {
+                "role": "system",
+                "content": "Summarize news articles in clear bullet points."
+            },
+            {
+                "role": "user",
+                "content": text[:4000]
+            }
+        ],
+        temperature=0.3
+    )
+
+    return response.choices[0].message.content
 
 # Function must be defined first
 def get_base64_image(image_path):
@@ -91,6 +113,28 @@ if url:
         st.success("Article loaded successfully!")
 
         st.subheader(article.title)
+
+        st.markdown("### Article Content")
+        st.write(article.text)
+
+    except:
+        st.error("❌ Could not extract article content.")
+if url:
+    try:
+        with st.spinner("Fetching article..."):
+            article = Article(url)
+            article.download()
+            article.parse()
+
+        st.success("Article loaded successfully!")
+
+        st.subheader(article.title)
+
+        if st.button("🤖 Generate AI Summary"):
+            with st.spinner("Generating summary..."):
+                summary = summarize_article(article.text)
+                st.markdown("### AI Summary")
+                st.write(summary)
 
         st.markdown("### Article Content")
         st.write(article.text)
