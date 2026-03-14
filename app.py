@@ -274,7 +274,7 @@ if st.session_state.summary:
     )
 
     st.download_button(
-        label="Download Article + Summary as PDF",
+        label="Download as PDF",
         data=pdf_file,
         file_name="article_summary.pdf",
         mime="application/pdf",
