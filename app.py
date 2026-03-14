@@ -1,16 +1,20 @@
 import streamlit as st
 from newspaper import Article
 import base64
-logo_base64 = get_base64_image("Austin-Police-Oversight-Logo-Faded-White.png")
+
+# Function must be defined first
 def get_base64_image(image_path):
     with open(image_path, "rb") as img_file:
         return base64.b64encode(img_file.read()).decode()
+
+# Now call the function
+logo_base64 = get_base64_image("Austin-Police-Oversight-Logo-Faded-White.png")
+
 st.set_page_config(
     page_title="Austin News Reader",
     page_icon="📰",
     layout="wide"
 )
-
 # Background styling
 st.markdown(
     """
