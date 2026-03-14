@@ -2,7 +2,11 @@ import streamlit as st
 from newspaper import Article
 import base64
 from openai import OpenAI
+if "article_text" not in st.session_state:
+    st.session_state.article_text = None
 
+if "article_title" not in st.session_state:
+    st.session_state.article_title = None
 client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
 def summarize_article(text):
@@ -178,25 +182,29 @@ if submit and url:
             article.download()
             article.parse()
 
+        st.session_state.article_text = article.text
+        st.session_state.article_title = article.title
+
         st.success("Article loaded successfully!")
-
-        # Show title
-        st.subheader(article.title)
-
-        # Show article content
-        st.markdown("### Article Content")
-        st.write(article.text)
-
-        st.markdown("---")
-
-        # AI summary button AFTER article
-        if st.button("🤖 Generate AI Summary", type="primary"):
-
-            with st.spinner("Generating AI summary..."):
-                summary = summarize_article(article.text)
-
-            st.markdown("## 🤖 AI Summary")
-            st.write(summary)
 
     except:
         st.error("❌ Could not extract article content.")
+
+    except:
+        st.error("❌ Could not extract article content.")
+if st.session_state.article_text:
+
+    st.subheader(st.session_state.article_title)
+
+    st.markdown("### Article Content")
+    st.write(st.session_state.article_text)
+
+    st.markdown("---")
+
+    if st.button("🤖 Generate AI Summary", type="primary"):
+
+        with st.spinner("Generating AI summary..."):
+            summary = summarize_article(st.session_state.article_text)
+
+        st.markdown("## 🤖 AI Summary")
+        st.write(summary)
