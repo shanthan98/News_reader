@@ -1,6 +1,10 @@
 import streamlit as st
 from newspaper import Article
-
+import base64
+logo_base64 = get_base64_image("Austin-Police-Oversight-Logo-Faded-White.png")
+def get_base64_image(image_path):
+    with open(image_path, "rb") as img_file:
+        return base64.b64encode(img_file.read()).decode()
 st.set_page_config(
     page_title="Austin News Reader",
     page_icon="📰",
@@ -37,7 +41,28 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
+st.markdown(
+    f"""
+    <style>
+    .logo-container {{
+        position: fixed;
+        top: 20px;
+        right: 40px;
+        z-index: 1000;
+    }}
 
+    .logo-container img {{
+        width: 140px;
+        opacity: 0.95;
+    }}
+    </style>
+
+    <div class="logo-container">
+        <img src="data:image/png;base64,{logo_base64}">
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 st.title("📰 Austin News Reader")
 st.markdown("Paste a news article link below to read it without ads or subscription popups.")
 
