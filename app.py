@@ -130,12 +130,16 @@ if url:
 
         st.subheader(article.title)
 
-        if st.button("🤖 Generate AI Summary"):
-            with st.spinner("Generating summary..."):
-                summary = summarize_article(article.text)
-                st.markdown("### AI Summary")
-                st.write(summary)
+        # Make the button very visible
+        if st.button("🤖 Generate AI Summary", type="primary"):
 
+            with st.spinner("Generating AI summary..."):
+                summary = summarize_article(article.text)
+
+            st.markdown("## 🤖 AI Summary")
+            st.write(summary)
+
+        st.markdown("---")
         st.markdown("### Article Content")
         st.write(article.text)
 
