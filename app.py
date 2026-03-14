@@ -89,6 +89,29 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
+st.markdown(
+    """
+    <style>
+
+    /* Fix button visibility */
+    div.stButton > button {
+        background-color: #44499C;
+        color: white;
+        border-radius: 6px;
+        border: none;
+        height: 38px;
+        font-weight: 600;
+    }
+
+    div.stButton > button:hover {
+        background-color: #2f347a;
+        color: white;
+    }
+
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 st.title("📰 APO News Reader")
 st.markdown("Paste a news article link below to read it without ads or subscription popups.")
 
@@ -106,7 +129,7 @@ with col1:
     )
 
 with col2:
-    submit = st.button("Read")
+    submit = st.button("Read Article", use_container_width=True)
 
 st.markdown("---")
 
