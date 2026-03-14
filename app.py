@@ -7,17 +7,39 @@ st.set_page_config(
     layout="wide"
 )
 
+# Background styling
+st.markdown(
+    """
+    <style>
+    .stApp {
+        background-image: url("https://images.unsplash.com/photo-1504711434969-e33886168f5c");
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+    }
+
+    h1, h2, h3, h4, h5, h6, p, div, label {
+        color: white !important;
+    }
+
+    input {
+        color: black !important;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 st.title("📰 Austin News Reader")
 st.markdown("Paste a news article link below to read it without ads or subscription popups.")
 
 st.markdown("---")
 
-# Clear input section
 st.subheader("🔗 Enter News Article Link")
 
 url = st.text_input(
-    label="Paste the article URL here:",
-    placeholder="https://www.statesman.com/...",
+    "Paste the article URL here:",
+    placeholder="https://www.statesman.com/..."
 )
 
 st.markdown("---")
