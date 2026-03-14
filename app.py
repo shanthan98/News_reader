@@ -1,3 +1,7 @@
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib.pagesizes import letter
+import io
 import streamlit as st
 from newspaper import Article
 import base64
@@ -27,6 +31,34 @@ def summarize_article(text):
     )
 
     return response.choices[0].message.content
+def create_pdf(title, summary, article_text):
+
+    buffer = io.BytesIO()
+
+    doc = SimpleDocTemplate(buffer, pagesize=letter)
+    styles = getSampleStyleSheet()
+
+    story = []
+
+    # Title
+    story.append(Paragraph(f"<b>{title}</b>", styles["Title"]))
+    story.append(Spacer(1, 20))
+
+    # Summary
+    story.append(Paragraph("<b>AI Summary</b>", styles["Heading2"]))
+    story.append(Spacer(1, 10))
+    story.append(Paragraph(summary.replace("\n", "<br/>"), styles["BodyText"]))
+    story.append(Spacer(1, 20))
+
+    # Article
+    story.append(Paragraph("<b>Full Article</b>", styles["Heading2"]))
+    story.append(Spacer(1, 10))
+    story.append(Paragraph(article_text.replace("\n", "<br/>"), styles["BodyText"]))
+
+    doc.build(story)
+
+    buffer.seek(0)
+    return buffer
 
 # Function must be defined first
 def get_base64_image(image_path):
@@ -200,8 +232,26 @@ if st.session_state.article_text:
 
     if st.button("🤖 Generate AI Summary", type="primary"):
 
-        with st.spinner("Generating AI summary..."):
-            summary = summarize_article(st.session_state.article_text)
+    with st.spinner("Generating AI summary..."):
+        st.session_state.summary = summarize_article(st.session_state.article_text)
 
-        st.markdown("## 🤖 AI Summary")
-        st.write(summary)
+if st.session_state.summary:
+
+    st.markdown("## 🤖 AI Summary")
+    st.write(st.session_state.summary)
+if "summary" not in st.session_state:
+    st.session_state.summary = None
+if st.session_state.summary:
+
+    pdf_file = create_pdf(
+        st.session_state.article_title,
+        st.session_state.summary,
+        st.session_state.article_text
+    )
+
+    st.download_button(
+        label="📄 Download Article + Summary as PDF",
+        data=pdf_file,
+        file_name="article_summary.pdf",
+        mime="application/pdf"
+    )
