@@ -250,7 +250,7 @@ with col1:
     )
 
 with col2:
-    submit = st.button("🔎 Read Article", use_container_width=True)
+    submit = st.button("Read Article", use_container_width=True)
 
 st.markdown("---")
 
