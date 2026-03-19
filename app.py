@@ -231,7 +231,7 @@ div.stDownloadButton > button:hover {
 
 # ----------- PAGE TITLE -----------
 
-st.title("APO News Reader")
+st.title("Austin News Reader")
 st.markdown("Paste a news article link below to read it without ads or subscription popups.")
 st.markdown("---")
 
@@ -400,7 +400,9 @@ st.markdown(
 </div>
 
 <p style="font-size:14px;">
-© 2026 APO News Reader • Built by Shanthan Kasula
+Copyright ©2026 All rights reserved | This template is made by Shanthan
+
+
 </p>
 
 </div>
