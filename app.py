@@ -307,12 +307,12 @@ if st.session_state.summary:
 
     # ----------- DOWNLOAD PDF BUTTON -----------
 
- pdf_file = create_pdf(
-    st.session_state.article_title,
-    st.session_state.summary,
-    st.session_state.article_text,
-    url
-)
+     pdf_file = create_pdf(
+        st.session_state.article_title,
+        st.session_state.summary,
+        st.session_state.article_text,
+        url
+    )
 
     st.download_button(
         label="Download as PDF",
