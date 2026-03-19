@@ -369,50 +369,41 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
-# -----------------------------------------------------
-# FOOTER CONTENT
-# -----------------------------------------------------
+# ----------- FOOTER SECTION -----------
 
-st.markdown("""
-<div class="footer-container">
+st.markdown("---")
 
-    <!-- Find me section -->
-    <div style="font-size:22px; font-weight:500;">
-        Find me on
-    </div>
+st.markdown(
+"""
+<div style="text-align:center; margin-top:30px;">
 
-    <!-- Social Icons -->
-    <div class="footer-icons">
+<p style="font-size:18px; margin-bottom:10px;">Find me on</p>
 
-        <a href="https://github.com/shanthan98" target="_blank">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" width="36">
-        </a>
+<div style="display:flex; justify-content:center; gap:30px; margin-bottom:20px;">
 
-        <a href="https://www.linkedin.com/in/shanthan-k/" target="_blank">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="36">
-        </a>
+<a href="https://github.com/shanthan98" target="_blank">
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" width="32">
+</a>
 
-        <a href="https://shanthan-kasula-portfolio.netlify.app/" target="_blank">
-            <img src="https://cdn-icons-png.flaticon.com/512/1006/1006771.png" width="36">
-        </a>
+<a href="https://www.linkedin.com/in/shanthan-k/" target="_blank">
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="32">
+</a>
 
-    </div>
-
-
-    <!-- Visitor Counter -->
-    <div class="visitor-title">
-        No. of Visitors
-    </div>
-
-    <div>
-        <img src="https://hitwebcounter.com/counter/counter.php?page=21483820&style=0001&nbdigits=5&type=page&initCount=0"/>
-    </div>
-
-
-    <!-- Copyright -->
-    <div class="footer-copy">
-        Copyright ©2026 APO News Reader | Built by Shanthan Kasula
-    </div>
+<a href="https://shanthan-kasula-portfolio.netlify.app/" target="_blank">
+<img src="https://cdn-icons-png.flaticon.com/512/1006/1006771.png" width="32">
+</a>
 
 </div>
-""", unsafe_allow_html=True)
+
+<div style="margin-bottom:15px;">
+<img src="https://hitwebcounter.com/counter/counter.php?page=21483820&style=0001&nbdigits=5&type=page&initCount=0"/>
+</div>
+
+<p style="font-size:14px;">
+© 2026 APO News Reader • Built by Shanthan Kasula
+</p>
+
+</div>
+""",
+unsafe_allow_html=True
+)
