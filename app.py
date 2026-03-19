@@ -324,59 +324,40 @@ if st.session_state.summary:
 
 st.markdown("---")
 
-st.markdown("### Feedback & Connect")
+st.markdown("""
+<div style="text-align:center; margin-top:40px;">
 
-col1, col2, col3 = st.columns([2,3,2])
+    <p style="font-size:22px; font-weight:500; margin-bottom:20px;">
+        Find me on
+    </p>
 
-# Feedback button
-with col1:
-    st.link_button(
-        "Provide Feedback",
-        "https://docs.google.com/forms/d/e/1FAIpQLSfXFyUbUQajgL_rLF9o7Jb4aOaRCui4VznwZlPSrBQ77sO_ug/viewform?usp=header"
-    )
+    <div style="display:flex; justify-content:center; gap:30px; margin-bottom:40px;">
 
-# Social icons
-with col2:
-
-    st.markdown(
-        """
-        <div style="display:flex; gap:25px; align-items:center;">
-        
-        <a href="https://github.com/shanthan98">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" width="28">
+        <a href="https://github.com/shanthan98" target="_blank">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" width="36">
         </a>
 
-        <a href="https://www.linkedin.com/in/shanthan-k/">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="28">
+        <a href="https://www.linkedin.com/in/shanthan-k/" target="_blank">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="36">
         </a>
 
-        <a href="https://shanthan-kasula-portfolio.netlify.app/">
-            <img src="https://cdn-icons-png.flaticon.com/512/1006/1006771.png" width="28">
+        <a href="https://shanthan-kasula-portfolio.netlify.app/" target="_blank">
+            <img src="https://cdn-icons-png.flaticon.com/512/1006/1006771.png" width="36">
         </a>
 
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-
-# Visitor counter
-with col3:
-
-    st.markdown(
-        """
-        <img src="https://hitwebcounter.com/counter/counter.php?page=YOUR_ID&style=0006&nbdigits=5&type=page&initCount=0"
-        title="Visitors" Alt="Visitors" border="0"/>
-        """,
-        unsafe_allow_html=True
-    )
-
-
-# Copyright text
-st.markdown(
-    """
-    <div style="text-align:center; margin-top:20px; font-size:14px;">
-    © 2026 APO News Reader • Built by Shanthan Kasula
     </div>
-    """,
-    unsafe_allow_html=True
-)
+
+    <p style="font-size:20px; text-decoration:underline; margin-bottom:10px;">
+        No. of Visitors
+    </p>
+
+    <div style="margin-bottom:30px;">
+        <img src="https://hitwebcounter.com/counter/counter.php?page=21483820&style=0001&nbdigits=5&type=page&initCount=0"/>
+    </div>
+
+    <p style="font-size:14px; opacity:0.9;">
+        Copyright ©2026 APO News Reader | Built by Shanthan Kasula
+    </p>
+
+</div>
+""", unsafe_allow_html=True)
