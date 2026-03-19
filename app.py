@@ -320,18 +320,69 @@ if st.session_state.summary:
         mime="application/pdf"
     )
     
-# ----------- FOOTER SECTION -----------
+# =====================================================
+# FOOTER SECTION
+# =====================================================
 
 st.markdown("---")
 
+
+# -----------------------------------------------------
+# FOOTER STYLING
+# Makes sure footer container has no white background
+# and centers everything nicely
+# -----------------------------------------------------
+
 st.markdown("""
-<div style="text-align:center; margin-top:40px;">
+<style>
 
-    <p style="font-size:22px; font-weight:500; margin-bottom:20px;">
+.footer-container {
+    text-align: center;
+    margin-top: 50px;
+    padding-bottom: 40px;
+}
+
+/* Social icon row */
+.footer-icons {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 15px;
+    margin-bottom: 35px;
+}
+
+/* Visitor section */
+.visitor-title {
+    font-size: 20px;
+    text-decoration: underline;
+    margin-bottom: 10px;
+}
+
+/* Copyright text */
+.footer-copy {
+    font-size: 14px;
+    opacity: 0.9;
+    margin-top: 30px;
+}
+
+</style>
+""", unsafe_allow_html=True)
+
+
+# -----------------------------------------------------
+# FOOTER CONTENT
+# -----------------------------------------------------
+
+st.markdown("""
+<div class="footer-container">
+
+    <!-- Find me section -->
+    <div style="font-size:22px; font-weight:500;">
         Find me on
-    </p>
+    </div>
 
-    <div style="display:flex; justify-content:center; gap:30px; margin-bottom:40px;">
+    <!-- Social Icons -->
+    <div class="footer-icons">
 
         <a href="https://github.com/shanthan98" target="_blank">
             <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" width="36">
@@ -347,17 +398,21 @@ st.markdown("""
 
     </div>
 
-    <p style="font-size:20px; text-decoration:underline; margin-bottom:10px;">
-        No. of Visitors
-    </p>
 
-    <div style="margin-bottom:30px;">
+    <!-- Visitor Counter -->
+    <div class="visitor-title">
+        No. of Visitors
+    </div>
+
+    <div>
         <img src="https://hitwebcounter.com/counter/counter.php?page=21483820&style=0001&nbdigits=5&type=page&initCount=0"/>
     </div>
 
-    <p style="font-size:14px; opacity:0.9;">
+
+    <!-- Copyright -->
+    <div class="footer-copy">
         Copyright ©2026 APO News Reader | Built by Shanthan Kasula
-    </p>
+    </div>
 
 </div>
 """, unsafe_allow_html=True)
