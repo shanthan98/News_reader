@@ -2,8 +2,7 @@ Austin News Reader
 
 ## Application Preview
 
-![](Placeholder.png)
-
+![Application Preview](Placeholder.png)
 Austin News Reader is an AI-powered web application designed to help users read and analyze news articles without distractions. The tool extracts the full article from a provided URL, formats it into readable paragraphs, generates an AI-powered summary, and allows users to download the article and summary as a PDF.
 
 This project was built to simplify reading news articles related to policy, complaints, and oversight topics while eliminating paywall interruptions and clutter.
