@@ -4,6 +4,8 @@ from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib.pagesizes import letter
 import io
+import re
+
 
 import streamlit as st
 from newspaper import Article
@@ -44,7 +46,29 @@ def summarize_article(text):
     )
 
     return response.choices[0].message.content
+    
+# ----------- FUNCTION: FORMAT ARTICLE INTO PARAGRAPHS -----------
 
+def format_article_text(text, sentences_per_paragraph=4):
+
+    # Split text into sentences
+    sentences = re.split(r'(?<=[.!?]) +', text)
+
+    paragraphs = []
+    current = []
+
+    for sentence in sentences:
+        current.append(sentence)
+
+        if len(current) >= sentences_per_paragraph:
+            paragraphs.append(" ".join(current))
+            current = []
+
+    # Add remaining sentences
+    if current:
+        paragraphs.append(" ".join(current))
+
+    return paragraphs
 
 # ----------- FUNCTION: CREATE PDF FILE -----------
 
@@ -70,7 +94,11 @@ def create_pdf(title, summary, article_text):
     # Full article section
     story.append(Paragraph("<b>Full Article</b>", styles["Heading2"]))
     story.append(Spacer(1, 10))
-    story.append(Paragraph(article_text.replace("\n", "<br/>"), styles["BodyText"]))
+    formatted_paragraphs = format_article_text(article_text)
+
+    for para in formatted_paragraphs:
+        story.append(Paragraph(para, styles["BodyText"]))
+        story.append(Spacer(1, 12))
 
     doc.build(story)
 
@@ -240,7 +268,11 @@ if st.session_state.article_text:
     st.subheader(st.session_state.article_title)
 
     st.markdown("### Article Content")
-    st.write(st.session_state.article_text)
+    formatted_paragraphs = format_article_text(st.session_state.article_text)
+
+    for para in formatted_paragraphs:
+        st.markdown(para)
+        st.markdown("")
 
     st.markdown("---")
 
