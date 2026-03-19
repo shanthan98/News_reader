@@ -51,8 +51,11 @@ def summarize_article(text):
 
 def format_article_text(text, sentences_per_paragraph=4):
 
-    # Split text into sentences
-    sentences = re.split(r'(?<=[.!?]) +', text)
+    # Clean extra whitespace
+    text = re.sub(r'\s+', ' ', text)
+
+    # Split into sentences
+    sentences = re.split(r'(?<=[.!?])\s+', text)
 
     paragraphs = []
     current = []
@@ -64,7 +67,6 @@ def format_article_text(text, sentences_per_paragraph=4):
             paragraphs.append(" ".join(current))
             current = []
 
-    # Add remaining sentences
     if current:
         paragraphs.append(" ".join(current))
 
@@ -268,16 +270,15 @@ if st.session_state.article_text:
     st.subheader(st.session_state.article_title)
 
     st.markdown("### Article Content")
+
     formatted_paragraphs = format_article_text(st.session_state.article_text)
 
     for para in formatted_paragraphs:
-        st.markdown(para)
-        st.markdown("")
+        st.markdown(f"<p style='margin-bottom:18px; line-height:1.6'>{para}</p>", unsafe_allow_html=True)
 
     st.markdown("---")
 
-    # Button to generate AI summary
-    if st.button("🤖 Generate AI Summary", type="primary"):
+    if st.button("Generate AI Summary", type="primary"):
 
         with st.spinner("Generating AI summary..."):
             st.session_state.summary = summarize_article(st.session_state.article_text)
