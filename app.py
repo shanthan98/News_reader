@@ -5,6 +5,8 @@ from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib.pagesizes import letter
 import io
 import re
+from datetime import datetime
+from urllib.parse import urlparse
 
 
 import streamlit as st
@@ -74,7 +76,7 @@ def format_article_text(text, sentences_per_paragraph=4):
 
 # ----------- FUNCTION: CREATE PDF FILE -----------
 
-def create_pdf(title, summary, article_text):
+def create_pdf(title, summary, article_text, source_url):
 
     buffer = io.BytesIO()
 
@@ -96,11 +98,22 @@ def create_pdf(title, summary, article_text):
     # Full article section
     story.append(Paragraph("<b>Full Article</b>", styles["Heading2"]))
     story.append(Spacer(1, 10))
+
     formatted_paragraphs = format_article_text(article_text)
 
     for para in formatted_paragraphs:
         story.append(Paragraph(para, styles["BodyText"]))
         story.append(Spacer(1, 12))
+
+    # -------- Footer metadata --------
+
+    story.append(Spacer(1, 30))
+
+    generated_date = datetime.now().strftime("%B %d, %Y")
+    domain = urlparse(source_url).netloc
+
+    story.append(Paragraph(f"<i>Generated: {generated_date}</i>", styles["BodyText"]))
+    story.append(Paragraph(f"<i>Source URL: {domain}</i>", styles["BodyText"]))
 
     doc.build(story)
 
@@ -294,11 +307,12 @@ if st.session_state.summary:
 
     # ----------- DOWNLOAD PDF BUTTON -----------
 
-    pdf_file = create_pdf(
-        st.session_state.article_title,
-        st.session_state.summary,
-        st.session_state.article_text
-    )
+ pdf_file = create_pdf(
+    st.session_state.article_title,
+    st.session_state.summary,
+    st.session_state.article_text,
+    url
+)
 
     st.download_button(
         label="Download as PDF",
