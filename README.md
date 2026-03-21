@@ -11,8 +11,7 @@ This project was built to simplify reading news articles related to policy, comp
 ---
 
 # Live Application
-
-Streamlit App:  
+ 
 https://shanthan-adblocker.streamlit.app/#enter-news-article-link
 ---
 
