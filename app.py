@@ -298,20 +298,29 @@ st.markdown("---")
 
 with st.spinner("Fetching article..."):
 
-    article = Article(url)
-    article.download()
-    article.parse()
-
-    text = article.text
+    text = ""
+    title = ""
 
     # -------- Attempt 1: Newspaper --------
-    if text and len(text) > 300:
-        st.success("Article extracted using standard method.")
+    try:
+        article = Article(url)
+        article.download()
+        article.parse()
 
-    else:
+        text = article.text
+        title = article.title
+
+        if text and len(text) > 300:
+            st.success("Article extracted using standard method.")
+
+        else:
+            raise Exception("Weak content")
+
+    except Exception:
+
         st.warning("Standard extraction failed. Trying AMP version...")
 
-        # -------- Attempt 2: AMP Version --------
+        # -------- Attempt 2: AMP --------
         try:
             amp_url = get_amp_url(url)
 
@@ -320,6 +329,7 @@ with st.spinner("Fetching article..."):
             amp_article.parse()
 
             text = amp_article.text
+            title = amp_article.title
 
             if text and len(text) > 300:
                 st.success("Article extracted using AMP version.")
@@ -332,11 +342,15 @@ with st.spinner("Fetching article..."):
 
             # -------- Attempt 3: BeautifulSoup --------
             text = fallback_extract(url)
+            title = "Untitled Article"
 
-    # Final assignment
+    # -------- Final assignment --------
     st.session_state.article_text = text
-    st.session_state.article_title = article.title or "Untitled Article"
+    st.session_state.article_title = title
     st.session_state.summary = None
+    
+    if not st.session_state.article_text or len(st.session_state.article_text) < 100:
+        st.error("❌ Unable to extract article content from this website.")
 
 
 # ----------- DISPLAY ARTICLE CONTENT -----------
