@@ -49,6 +49,45 @@ def summarize_article(text):
 
     return response.choices[0].message.content
     
+# ----------- FUNCTION: Fallback Code -----------
+    
+def fallback_extract(url):
+    import requests
+    from bs4 import BeautifulSoup
+
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+    }
+
+    try:
+        response = requests.get(url, headers=headers, timeout=10)
+
+        if response.status_code != 200:
+            return ""
+
+        soup = BeautifulSoup(response.text, "html.parser")
+
+        # First attempt: paragraph tags
+        paragraphs = soup.find_all("p")
+        text = " ".join([p.get_text(strip=True) for p in paragraphs])
+
+        # Second attempt: div tags if content is still weak
+        if len(text) < 300:
+            divs = soup.find_all("div")
+            text = " ".join([d.get_text(strip=True) for d in divs])
+
+        return text
+
+    except Exception:
+        return ""
+ # ----------- FUNCTION: Helper Function-----------
+       
+def get_amp_url(url):
+    if "?" in url:
+        return url + "&outputType=amp"
+    else:
+        return url + "?outputType=amp"
+    
 # ----------- FUNCTION: FORMAT ARTICLE INTO PARAGRAPHS -----------
 
 def format_article_text(text, sentences_per_paragraph=4):
@@ -257,23 +296,47 @@ st.markdown("---")
 
 # ----------- FETCH ARTICLE WHEN USER CLICKS READ -----------
 
-if submit and url:
+with st.spinner("Fetching article..."):
 
-    try:
+    article = Article(url)
+    article.download()
+    article.parse()
 
-        with st.spinner("Fetching article..."):
-            article = Article(url)
-            article.download()
-            article.parse()
+    text = article.text
 
-        st.session_state.article_text = article.text
-        st.session_state.article_title = article.title
-        st.session_state.summary = None
+    # -------- Attempt 1: Newspaper --------
+    if text and len(text) > 300:
+        st.success("Article extracted using standard method.")
 
-        st.success("Article loaded successfully!")
+    else:
+        st.warning("Standard extraction failed. Trying AMP version...")
 
-    except Exception:
-        st.error("❌ Could not extract article content.")
+        # -------- Attempt 2: AMP Version --------
+        try:
+            amp_url = get_amp_url(url)
+
+            amp_article = Article(amp_url)
+            amp_article.download()
+            amp_article.parse()
+
+            text = amp_article.text
+
+            if text and len(text) > 300:
+                st.success("Article extracted using AMP version.")
+            else:
+                raise Exception("AMP failed")
+
+        except Exception:
+
+            st.warning("AMP failed. Using fallback extraction...")
+
+            # -------- Attempt 3: BeautifulSoup --------
+            text = fallback_extract(url)
+
+    # Final assignment
+    st.session_state.article_text = text
+    st.session_state.article_title = article.title or "Untitled Article"
+    st.session_state.summary = None
 
 
 # ----------- DISPLAY ARTICLE CONTENT -----------
