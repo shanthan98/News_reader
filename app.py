@@ -56,37 +56,31 @@ def fallback_extract(url):
     from bs4 import BeautifulSoup
 
     headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+        "User-Agent": "Mozilla/5.0"
     }
 
     try:
         response = requests.get(url, headers=headers, timeout=10)
 
-        if response.status_code != 200:
-            return ""
-
         soup = BeautifulSoup(response.text, "html.parser")
 
-        # First attempt: paragraph tags
         paragraphs = soup.find_all("p")
         text = " ".join([p.get_text(strip=True) for p in paragraphs])
 
-        # Second attempt: div tags if content is still weak
-        if len(text) < 300:
-            divs = soup.find_all("div")
-            text = " ".join([d.get_text(strip=True) for d in divs])
+        # ❗ Remove garbage / JS-block content
+        if "JavaScript is disabled" in text or len(text) < 300:
+            return ""
 
         return text
 
-    except Exception:
+    except:
         return ""
  # ----------- FUNCTION: Helper Function-----------
        
 def get_amp_url(url):
-    if "?" in url:
-        return url + "&outputType=amp"
-    else:
-        return url + "?outputType=amp"
+    if url.endswith(".php"):
+        return url.replace(".php", ".php?outputType=amp")
+    return url + "?outputType=amp"
     
 # ----------- FUNCTION: FORMAT ARTICLE INTO PARAGRAPHS -----------
 
@@ -349,9 +343,10 @@ with st.spinner("Fetching article..."):
     st.session_state.article_title = title
     st.session_state.summary = None
     
-    if not st.session_state.article_text or len(st.session_state.article_text) < 100:
-        st.error("❌ Unable to extract article content from this website.")
-
+    if not text or "JavaScript is disabled" in text or len(text) < 300:
+        st.error("Unable to extract article content from this website.")
+        st.info("Try opening the article in browser reader mode or use another link.")
+        st.stop()
 
 # ----------- DISPLAY ARTICLE CONTENT -----------
 
